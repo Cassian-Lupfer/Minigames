@@ -4,15 +4,18 @@
 class Button {
 private:
 	Vector2 position;
-	const char* name;
-	int width;
-	int height;
+	Vector2 size;
 	Color color;
+	const char* name;
 	Font font;
 
+	Rectangle rec;
+
 public:
-	Button(Vector2 pPosition, const char* pName, int pWidth, int pHeight, Color pColor, Font pFont);
+	Button(Vector2 pPosition, Vector2 pSize, Color pColor, const char* pName, Font pFont);
 
 	void draw();
+
+	bool isPressed();
 
 };
