@@ -5,6 +5,8 @@
 int screenWidth = 1920;
 int screenHeight = 1080;
 
+bool close = false;
+
 int main() {
 	InitWindow(screenWidth, screenHeight, "Minigames");
 	SetTargetFPS(60);
@@ -12,14 +14,14 @@ int main() {
 	// Load assets
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
 	
-	// Instance classes
-	TitleMenu titleMenu(mainFont);
+	// Instance scene classes
+	TitleMenu titleMenu(mainFont, close);
 
-	while (WindowShouldClose() == false) {
+	while (!WindowShouldClose() && !close) {
 		BeginDrawing();
 
-		// Draw
-		titleMenu.draw();
+		// Update scene class
+		titleMenu.update();
 
 		EndDrawing();
 	}

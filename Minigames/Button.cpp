@@ -17,5 +17,10 @@ void Button::draw() {
 
 bool Button::isPressed() {
 	Vector2 mousePosition = GetMousePosition();
-	return CheckCollisionPointRec(mousePosition, rec);
+	if (CheckCollisionPointRec(mousePosition, rec) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

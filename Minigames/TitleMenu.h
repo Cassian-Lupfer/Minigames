@@ -6,16 +6,16 @@
 
 class TitleMenu {
 private:
-	Color purple = GetColor(0x3003d9FF);
 	Font font;
+	bool& close;
+	Color purple = GetColor(0x3003d9FF);
 	Button playButton;
 	Button exitButton;
-
 public:
-	TitleMenu(Font pFont);
-
+	TitleMenu(Font pFont, bool& pClose);
+	void update();
 	void draw();
-
+	void checkInteraction();
 };
 
 #endif

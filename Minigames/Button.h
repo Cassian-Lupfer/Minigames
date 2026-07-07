@@ -12,14 +12,10 @@ private:
 	Font font;
 
 	Rectangle rec;
-
 public:
 	Button(Vector2 pPosition, Vector2 pSize, Color pColor, const char* pName, Font pFont);
-
 	void draw();
-
 	bool isPressed();
-
 };
 
 #endif
