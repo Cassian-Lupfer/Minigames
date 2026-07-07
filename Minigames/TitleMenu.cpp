@@ -1,7 +1,8 @@
 #include "TitleMenu.h"
 
-TitleMenu::TitleMenu(Vector2 pWindowSize, Font pFont, bool& pClose)
-	: close(pClose),
+TitleMenu::TitleMenu(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, bool& pClose)
+	: currentScene(pCurrentScene),
+	close(pClose),
 	playButton({ 80, 500 }, { 200, 100 }, WHITE, "Play", pFont),
 	exitButton({ 80, 700 }, { 200, 100 }, WHITE, "Exit", pFont),
 	backButton({ pWindowSize.x - 280, 80 }, { 200, 100 }, WHITE, "Back", pFont),
@@ -45,11 +46,7 @@ void TitleMenu::checkInteraction() {
 			currentMode = Modes::TITLE;
 		}
 		if (snakePlayButton.isPressed()) {
-			playSnake = true;
+			currentScene = Scenes::SNAKEGAME;
 		}
 	}
-}
-
-bool TitleMenu::getSnakeButtonState() {
-	return playSnake;
 }

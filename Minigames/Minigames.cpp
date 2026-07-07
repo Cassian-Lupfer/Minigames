@@ -1,13 +1,12 @@
-#include <iostream>
 #include <raylib.h>
+#include "EnumClasses.h"
 #include "TitleMenu.h"
 #include "SnakeGame.h"
 
 float screenWidth = 1920;
 float screenHeight = 1080;
 bool close = false;
-enum class Scenes {TITLEMENU, SNAKEGAME};
-Scenes currentScene = Scenes::TITLEMENU;
+Scenes currentScene = Scenes::SNAKEGAME;
 
 int main() {
 	InitWindow(screenWidth, screenHeight, "Minigames");
@@ -17,16 +16,11 @@ int main() {
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
 	
 	// Instance scene classes
-	TitleMenu titleMenu({screenWidth, screenHeight}, mainFont, close);
-	SnakeGame snakeGame({ screenWidth, screenHeight }, mainFont);
+	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
+	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont);
 
 	while (!WindowShouldClose() && !close) {
 		BeginDrawing();
-
-		// Check SnakePlayButton of TitleMenu
-		if (titleMenu.getSnakeButtonState()) {
-			currentScene = Scenes::SNAKEGAME;
-		}
 
 		// Update scene class
 		switch (currentScene) {

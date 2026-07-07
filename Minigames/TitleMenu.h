@@ -2,10 +2,12 @@
 #define TITLEMENU_H_
 
 #include <raylib.h>
+#include "EnumClasses.h"
 #include "Button.h"
 
 class TitleMenu {
 private:
+	Scenes& currentScene;
 	Vector2 windowSize;
 	Font font;
 	bool& close;
@@ -16,13 +18,11 @@ private:
 	Button snakePlayButton;
 	enum class Modes {TITLE, SELECTION};
 	Modes currentMode = Modes::TITLE;
-	bool playSnake = false;
 public:
-	TitleMenu(Vector2 pWindowSize, Font pFont, bool& pClose);
+	TitleMenu(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, bool& pClose);
 	void update();
 	void draw();
 	void checkInteraction();
-	bool getSnakeButtonState();
 };
 
 #endif

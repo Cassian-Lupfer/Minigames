@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
+    <ClInclude Include="EnumClasses.h" />
     <ClInclude Include="SnakeGame.h" />
     <ClInclude Include="TitleMenu.h" />
   </ItemGroup>
