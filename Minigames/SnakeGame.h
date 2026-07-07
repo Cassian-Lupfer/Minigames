@@ -16,6 +16,9 @@ private:
 	int fieldHeight = 16;
 	int cellSize = 40;
 	std::vector<int> gameField;
+	/* Every array cell has cell index of one body part in game field.
+	Head of snake is at array cell 0 */
+	std::vector<int> snakeArray;
 public:
 	SnakeGame(Scenes pCurrentScene, Vector2 pWindowSize, Font pFont);
 	void update();

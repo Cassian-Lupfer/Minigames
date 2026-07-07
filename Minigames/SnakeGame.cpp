@@ -22,8 +22,8 @@ void SnakeGame::draw() {
 			int offsetY = (windowSize.y / 2) - (fieldHeight * cellSize + ((fieldHeight - 1) * (cellSize / 4))) / 2;
 			DrawRectangle(cellPosX + offsetX, cellPosY + offsetY, cellSize, cellSize, WHITE);
 
-			int cellIndex = j + (i - 1) * fieldHeight;
-			DrawText("", cellPosX + offsetX, cellPosY + offsetY, 20, BLACK);
+			int cellIndex = (j + 1) + i * fieldHeight;
+			DrawText(TextFormat("%i", cellIndex), cellPosX + offsetX, cellPosY + offsetY, 20, BLACK);
 		}
 	}
 }
