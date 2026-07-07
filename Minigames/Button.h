@@ -1,4 +1,6 @@
-#pragma once
+#ifndef BUTTON_H_
+#define BUTTON_H_
+
 #include <raylib.h>
 
 class Button {
@@ -19,3 +21,5 @@ public:
 	bool isPressed();
 
 };
+
+#endif
