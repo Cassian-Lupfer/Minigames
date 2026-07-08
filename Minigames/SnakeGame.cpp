@@ -47,6 +47,10 @@ void SnakeGame::draw() {
 			}
 		}
 	}
+
+	if (gameOver) {
+		DrawTextEx(font, "Game Over!", { windowSize.x / 2 - 170, windowSize.y - 120}, 80, 0, RED);
+	}
 }
 
 void SnakeGame::reset() {
@@ -71,11 +75,6 @@ void SnakeGame::setDirection() {
 	}
 	if (IsKeyPressed(KEY_RIGHT) && currentDirection != Direction::LEFT) {
 		currentDirection = Direction::RIGHT;
-	}
-
-	// test
-	if (IsKeyPressed(KEY_E)) {
-		extendSnake();
 	}
 }
 
@@ -170,8 +169,9 @@ void SnakeGame::spawnApple() {
 		for (int i = 0; i < snakeArray.size(); i++) {
 			if (snakeArray[i] == appleCellIndex) {
 				inSnake = true;
+				break;
 			}
-			else {
+			else if (i == snakeArray.size() - 1) {
 				inSnake = false;
 			}
 		}
