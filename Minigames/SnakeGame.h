@@ -32,6 +32,7 @@ public:
 	void reset();
 	void setDirection();
 	void updateSnake();
+	bool checkBodyHit(int pCellIndex);
 	void extendSnake();
 	void setGameOver();
 };

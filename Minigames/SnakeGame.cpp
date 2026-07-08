@@ -20,7 +20,8 @@ void SnakeGame::update() {
 
 void SnakeGame::draw() {
 	ClearBackground(BLACK);
-	DrawText(TextFormat("FPS: %i", GetFPS()), 10, windowSize.y - 40, 30, WHITE);
+	DrawTextEx(font, "Snake!", {windowSize.x / 2 - 120, 40}, 100, 0, WHITE);
+	DrawTextEx(font, TextFormat("FPS: %i", GetFPS()), { 10, windowSize.y - 40 }, 30, 0, WHITE);
 	for (int i = 0; i < fieldHeight; i++) {
 		for (int j = 0; j < fieldWidth; j++) {
 			int cellPosX = j * (cellSize + cellSize / 4);
@@ -79,35 +80,43 @@ void SnakeGame::updateSnake() {
 		for (int i = snakeArray.size() - 1; i >= 0; i--) {
 			// check if snake head, else if snake tail end and update snake array and game field
 			if (i == 0) {
-				// check direction and game field border and change position
+				// check direction and game field border and body hit and change position
 				switch (currentDirection) {
 				case Direction::UP:
 					if (snakeArray[i] <= fieldWidth) {
 						setGameOver();
 						return;
 					}
-					snakeArray[i] = snakeArray[i] - fieldWidth;
+					if (!checkBodyHit(snakeArray[i] - fieldWidth)) {
+						snakeArray[i] = snakeArray[i] - fieldWidth;
+					}
 					break;
 				case Direction::DOWN:
 					if (snakeArray[i] > fieldHeight * (fieldWidth - 1)) {
 						setGameOver();
 						return;
 					}
-					snakeArray[i] = snakeArray[i] + fieldWidth;
+					if (!checkBodyHit(snakeArray[i] + fieldWidth)) {
+						snakeArray[i] = snakeArray[i] + fieldWidth;
+					}
 					break;
 				case Direction::RIGHT:
 					if ((snakeArray[i] % fieldWidth) == (fieldWidth - 1)) {
 						setGameOver();
 						return;
 					}
-					snakeArray[i] = snakeArray[i] + 1;
+					if (!checkBodyHit(snakeArray[i] + 1)) {
+						snakeArray[i] = snakeArray[i] + 1;
+					}
 					break;
 				case Direction::LEFT:
 					if ((snakeArray[i] % fieldWidth) == 0) {
 						setGameOver();
 						return;
 					}
-					snakeArray[i] = snakeArray[i] - 1;
+					if (!checkBodyHit(snakeArray[i] - 1)) {
+						snakeArray[i] = snakeArray[i] - 1;
+					}
 					break;
 				}
 				gameField[snakeArray[i]] = 2;
@@ -127,6 +136,16 @@ void SnakeGame::updateSnake() {
 			}
 		}
 	}
+}
+
+bool SnakeGame::checkBodyHit(int pCellIndex) {
+	for (int i = 0; i < snakeArray.size(); i++) {
+		if (snakeArray[i] == pCellIndex) {
+			gameOver = true;
+			return true;
+		}
+	}
+	return false;
 }
 
 void SnakeGame::extendSnake() {
