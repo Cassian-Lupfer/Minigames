@@ -11,13 +11,16 @@ SnakeGame::SnakeGame(Scenes pCurrentScene, Vector2 pWindowSize, Font pFont)
 }
 
 void SnakeGame::update() {
-	setDirection();
-	updateSnake();
+	if (!gameOver) {
+		setDirection();
+		updateSnake();
+	}
 	draw();
 }
 
 void SnakeGame::draw() {
 	ClearBackground(BLACK);
+	DrawText(TextFormat("FPS: %i", GetFPS()), 10, windowSize.y - 40, 30, WHITE);
 	for (int i = 0; i < fieldHeight; i++) {
 		for (int j = 0; j < fieldWidth; j++) {
 			int cellPosX = j * (cellSize + cellSize / 4);
@@ -31,7 +34,7 @@ void SnakeGame::draw() {
 			if (gameField[cellIndex] == 0) {
 				continue;
 			}
-			if (gameField[cellIndex] == 1) {
+			else if (gameField[cellIndex] == 1) {
 				DrawCircleV(cellCenterPos, 20, BLACK);
 			}
 			else if (gameField[cellIndex] == 2) {
@@ -42,10 +45,11 @@ void SnakeGame::draw() {
 }
 
 void SnakeGame::reset() {
-	gameField[120] = 2;
-	snakeArray.push_back(120);
-	gameField[119] = 1;
-	snakeArray.push_back(119);
+	int headIndex = (fieldWidth / 2) + (fieldHeight * (fieldWidth / 2));
+	snakeArray = { headIndex, headIndex - 1, headIndex - 2 };
+	gameField[headIndex] = 2;
+	gameField[headIndex - 1] = 1;
+	gameField[headIndex - 2] = 1;
 }
 
 void SnakeGame::setDirection() {
@@ -61,56 +65,64 @@ void SnakeGame::setDirection() {
 	if (IsKeyPressed(KEY_RIGHT) && currentDirection != Direction::LEFT) {
 		currentDirection = Direction::RIGHT;
 	}
+
+	// test
+	if (IsKeyPressed(KEY_E)) {
+		extendSnake();
+	}
 }
 
 void SnakeGame::updateSnake() {
 	timer += GetFrameTime();
 	if (timer >= movementDuration) {
 		timer = 0.0;
-
-		for (int i = 0; i < snakeArray.size(); i++) {
-			//check direction and change position
-			switch (currentDirection) {
-			case Direction::UP:
-				snakeArray[i] = snakeArray[i] - fieldWidth;
-				break;
-			case Direction::DOWN:
-				snakeArray[i] = snakeArray[i] + fieldWidth;
-				break;
-			case Direction::RIGHT:
-				snakeArray[i] = snakeArray[i] + 1;
-				break;
-			case Direction::LEFT:
-				snakeArray[i] = snakeArray[i] - 1;
-				break;
-			}
-
-			//check game field border
-			
-
-			// check if snake head, else if snake tail end and update game field
+		for (int i = snakeArray.size() - 1; i >= 0; i--) {
+			// check if snake head, else if snake tail end and update snake array and game field
 			if (i == 0) {
+				// check direction and game field border and change position
+				switch (currentDirection) {
+				case Direction::UP:
+					if (snakeArray[i] <= fieldWidth) {
+						setGameOver();
+						return;
+					}
+					snakeArray[i] = snakeArray[i] - fieldWidth;
+					break;
+				case Direction::DOWN:
+					if (snakeArray[i] > fieldHeight * (fieldWidth - 1)) {
+						setGameOver();
+						return;
+					}
+					snakeArray[i] = snakeArray[i] + fieldWidth;
+					break;
+				case Direction::RIGHT:
+					if ((snakeArray[i] % fieldWidth) == (fieldWidth - 1)) {
+						setGameOver();
+						return;
+					}
+					snakeArray[i] = snakeArray[i] + 1;
+					break;
+				case Direction::LEFT:
+					if ((snakeArray[i] % fieldWidth) == 0) {
+						setGameOver();
+						return;
+					}
+					snakeArray[i] = snakeArray[i] - 1;
+					break;
+				}
 				gameField[snakeArray[i]] = 2;
 			}
 			else if (i == snakeArray.size() - 1) {
+				// delete current body part
+				gameField[snakeArray[i]] = 0;
+
+				// get position of predecessor body part
+				snakeArray[i] = snakeArray[i - 1];
 				gameField[snakeArray[i]] = 1;
-				//check direction and delte body part
-				switch (currentDirection) {
-				case Direction::UP:
-					gameField[snakeArray[i] - fieldWidth] = 0;
-					break;
-				case Direction::DOWN:
-					gameField[snakeArray[i] + fieldWidth] = 0;
-					break;
-				case Direction::RIGHT:
-					gameField[snakeArray[i] - 1] = 0;
-					break;
-				case Direction::LEFT:
-					gameField[snakeArray[i] + 1] = 0;
-					break;
-				}
 			}
 			else {
+				// get position of predecessor body part
+				snakeArray[i] = snakeArray[i - 1];
 				gameField[snakeArray[i]] = 1;
 			}
 		}
@@ -118,5 +130,9 @@ void SnakeGame::updateSnake() {
 }
 
 void SnakeGame::extendSnake() {
+	snakeArray.push_back(0);
+}
 
+void SnakeGame::setGameOver() {
+	gameOver = true;
 }
