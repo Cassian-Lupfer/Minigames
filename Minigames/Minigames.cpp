@@ -14,10 +14,13 @@ int main() {
 
 	// Load assets
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
+	Texture2D cellTexture = LoadTexture("assets/images/Snake Cell Texture.png");
+	Texture2D headTexture = LoadTexture("assets/images/Snake Head Texture.png");
+	Texture2D bodyTexture = LoadTexture("assets/images/Snake Body Texture.png");
 	
 	// Instance scene classes
 	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
-	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont);
+	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont, cellTexture, headTexture, bodyTexture);
 
 	while (!WindowShouldClose() && !close) {
 		BeginDrawing();
@@ -37,6 +40,9 @@ int main() {
 
 	// Unload assets
 	UnloadFont(mainFont);
+	UnloadTexture(cellTexture);
+	UnloadTexture(headTexture);
+	UnloadTexture(bodyTexture);
 
 	CloseWindow();
 	return 0;
