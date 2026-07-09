@@ -3,16 +3,31 @@
 #include "TitleMenu.h"
 #include "SnakeGame.h"
 
-float screenWidth = 1920;
-float screenHeight = 1080;
+constexpr float screenWidth = 1920;
+constexpr float screenHeight = 1080;
 bool close = false;
 Scenes currentScene = Scenes::SNAKEGAME;
+
+void updateSound(Sound& pSound, bool shouldPlay) {
+	if (shouldPlay) {
+		if (!IsSoundPlaying(pSound)) {
+			PlaySound(pSound);
+		}
+	}
+	else {
+		if (IsSoundPlaying(pSound)) {
+			StopSound(pSound);
+		}
+	}
+}
 
 int main() {
 	InitWindow(screenWidth, screenHeight, "Minigames");
 	SetTargetFPS(60);
+	InitAudioDevice();
 
 	// Load assets
+	Sound titleMenuSoundtrack = LoadSoundFromWave(LoadWave("assets/sounds/Menu Soundtrack.wav"));
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
 	Texture2D cellTexture = LoadTexture("assets/images/Snake Cell Texture.png");
 	Texture2D headTexture = LoadTexture("assets/images/Snake Head Texture.png");
@@ -30,9 +45,11 @@ int main() {
 		switch (currentScene) {
 		case Scenes::TITLEMENU:
 			titleMenu.update();
+			updateSound(titleMenuSoundtrack, true);
 			break;
 		case Scenes::SNAKEGAME:
 			snakeGame.update();
+			updateSound(titleMenuSoundtrack, false);
 			break;
 		}
 		
@@ -45,7 +62,9 @@ int main() {
 	UnloadTexture(headTexture);
 	UnloadTexture(bodyTexture);
 	UnloadTexture(appleTexture);
+	UnloadSound(titleMenuSoundtrack);
 
+	CloseAudioDevice();
 	CloseWindow();
 	return 0;
 }

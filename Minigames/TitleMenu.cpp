@@ -19,7 +19,7 @@ void TitleMenu::update() {
 
 void TitleMenu::draw() {
 	// Clear and draw
-	ClearBackground(purple);
+	ClearBackground(backgroundColor);
 	if (currentMode == Modes::TITLE) {
 		DrawTextEx(font, "Welcome to\nMINIGAMES!", { 80, 80 }, 150, 0, WHITE);
 		playButton.draw();

@@ -11,7 +11,7 @@ private:
 	Vector2 windowSize;
 	Font font;
 	bool& close;
-	Color purple = GetColor(0x3003d9FF);
+	const Color backgroundColor = GetColor(0x3003d9FF);
 	Button playButton;
 	Button exitButton;
 	Button backButton;

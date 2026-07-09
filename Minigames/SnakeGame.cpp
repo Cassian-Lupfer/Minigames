@@ -32,7 +32,7 @@ void SnakeGame::update() {
 }
 
 void SnakeGame::draw() {
-	ClearBackground(BLACK);
+	ClearBackground(backgroundColor);
 	DrawTextEx(font, "Snake!", {windowSize.x / 2 - 100, 20}, 80, 0, WHITE);
 	DrawTextEx(font, "Direction: [UP][DOWN][LEFT][RIGHT], Restart: [R], Exit: [E]", { 10, windowSize.y - 50 }, 40, 0, WHITE);
 	DrawTextEx(font, TextFormat("FPS: %i", GetFPS()), { 10, 10}, 30, 0, WHITE);
@@ -90,7 +90,7 @@ void SnakeGame::reset() {
 	gameOver = false;
 	score = 0;
 
-	ClearBackground(BLACK);
+	ClearBackground(backgroundColor);
 }
 
 void SnakeGame::setDirection() {
@@ -113,7 +113,7 @@ void SnakeGame::updateSnake() {
 	if (timer >= movementDuration) {
 		timer = 0.0;
 		for (int i = snakeArray.size() - 1; i >= 0; i--) {
-			// check if snake head, else if snake tail end and update snake array and game field
+			// check if snake head and update snake array and game field
 			if (i == 0) {
 				// check direction and game field border and body hit and change position
 				switch (currentDirection) {
@@ -161,6 +161,7 @@ void SnakeGame::updateSnake() {
 				checkAppleHit(snakeArray[i]);
 			}
 			else {
+				// if last body part of snake
 				if (i == snakeArray.size() - 1) {
 					// delete current body part
 					gameField[snakeArray[i]] = 0;
