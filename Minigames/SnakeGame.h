@@ -7,7 +7,7 @@
 
 class SnakeGame {
 private:
-	Scenes currentScene;
+	Scenes& currentScene;
 	Vector2 windowSize;
 	Font font;
 
@@ -28,7 +28,7 @@ private:
 	int appleCellIndex;
 	int score = 0;
 public:
-	SnakeGame(Scenes pCurrentScene, Vector2 pWindowSize, Font pFont);
+	SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont);
 	void update();
 	void draw();
 	void reset();

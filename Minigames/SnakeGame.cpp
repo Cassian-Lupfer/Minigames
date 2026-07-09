@@ -1,6 +1,7 @@
+#include <algorithm>
 #include "SnakeGame.h"
 
-SnakeGame::SnakeGame(Scenes pCurrentScene, Vector2 pWindowSize, Font pFont)
+SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont)
 	: currentScene(pCurrentScene),
 	gameField(fieldWidth * fieldHeight, 0)
 {
@@ -16,12 +17,21 @@ void SnakeGame::update() {
 		updateSnake();
 	}
 	draw();
+
+	if (IsKeyPressed(KEY_R)) {
+		reset();
+	}
+	if (IsKeyPressed(KEY_E)) {
+		currentScene = Scenes::TITLEMENU;
+		reset();
+	}
 }
 
 void SnakeGame::draw() {
 	ClearBackground(BLACK);
 	DrawTextEx(font, "Snake!", {windowSize.x / 2 - 100, 20}, 80, 0, WHITE);
-	DrawTextEx(font, TextFormat("FPS: %i", GetFPS()), { 10, windowSize.y - 40 }, 30, 0, WHITE);
+	DrawTextEx(font, "Direction: [UP][DOWN][LEFT][RIGHT], Restart: [R], Exit: [E]", { 10, windowSize.y - 50 }, 40, 0, WHITE);
+	DrawTextEx(font, TextFormat("FPS: %i", GetFPS()), { 10, 10}, 30, 0, WHITE);
 	float offsetX = (windowSize.x / 2) - (fieldWidth * cellSize + ((fieldWidth - 1) * (cellSize / 4))) / 2;
 	float offsetY = (windowSize.y / 2) - (fieldHeight * cellSize + ((fieldHeight - 1) * (cellSize / 4))) / 2;
 	DrawTextEx(font, TextFormat("Score: %i", score), { offsetX, offsetY + (fieldHeight * cellSize + ((fieldHeight - 1) * (cellSize / 4))) }, 60, 0, WHITE);
@@ -56,11 +66,19 @@ void SnakeGame::draw() {
 void SnakeGame::reset() {
 	int headIndex = (fieldWidth / 2) + (fieldHeight * (fieldWidth / 2));
 	snakeArray = { headIndex, headIndex - 1, headIndex - 2 };
+
+	std::fill(gameField.begin(), gameField.end(), 0);
 	gameField[headIndex] = 2;
 	gameField[headIndex - 1] = 1;
 	gameField[headIndex - 2] = 1;
 
 	spawnApple();
+
+	currentDirection = Direction::RIGHT;
+	gameOver = false;
+	score = 0;
+
+	ClearBackground(BLACK);
 }
 
 void SnakeGame::setDirection() {
