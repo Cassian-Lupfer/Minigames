@@ -1,7 +1,7 @@
 #include <algorithm>
 #include "SnakeGame.h"
 
-SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture)
+SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture, Texture2D pAppleTexture)
 	: currentScene(pCurrentScene),
 	gameField(fieldWidth * fieldHeight, 0)
 {
@@ -10,6 +10,7 @@ SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Tex
 	cellTexture = pCellTexture;
 	headTexture = pHeadTexture;
 	bodyTexture = pBodyTexture;
+	appleTexture = pAppleTexture;
 
 	reset();
 }
@@ -43,36 +44,31 @@ void SnakeGame::draw() {
 			Vector2 cellPos = { j * cellSize + offsetX, i * cellSize + offsetY};
 			DrawTextureEx(cellTexture, cellPos, 0, 4, WHITE);
 
+			Vector2 origin = { cellSize / 2, cellSize / 2 };
+			Rectangle cellRectangleSource = { 0, 0, 16, 16 };
+			Rectangle cellRectangleDest = { cellPos.x + origin.x, cellPos.y + origin.y, cellSize, cellSize };
+
 			int cellIndex = j + i * fieldHeight;
 			if (gameField[cellIndex] == 0) {
 				continue;
 			}
 			else if (gameField[cellIndex] == 1) {
-				DrawTextureEx(bodyTexture, cellPos, 0, 4, WHITE);
+				DrawTexturePro(bodyTexture, cellRectangleSource, cellRectangleDest, origin, 0, WHITE);
 			}
 			else if (gameField[cellIndex] == 2) {
-				DrawTextureEx(bodyTexture, cellPos, 0, 4, WHITE);
+				DrawTexturePro(headTexture, cellRectangleSource, cellRectangleDest, origin, 0, WHITE);
 			}
 			else if (gameField[cellIndex] == 3) {
-				DrawTextureEx(bodyTexture, cellPos, 0, 4, WHITE);
+				DrawTexturePro(headTexture, cellRectangleSource, cellRectangleDest, origin, 180, WHITE);
 			}
 			else if (gameField[cellIndex] == 4) {
-				DrawTextureEx(bodyTexture, cellPos, 0, 4, WHITE);
+				DrawTexturePro(headTexture, cellRectangleSource, cellRectangleDest, origin, -90, WHITE);
 			}
 			else if (gameField[cellIndex] == 5) {
-				DrawTextureEx(headTexture, cellPos, 0, 4, WHITE);
+				DrawTexturePro(headTexture, cellRectangleSource, cellRectangleDest, origin, 90, WHITE);
 			}
 			else if (gameField[cellIndex] == 6) {
-				DrawTextureEx(headTexture, cellPos, 0, 4, WHITE);
-			}
-			else if (gameField[cellIndex] == 7) {
-				DrawTextureEx(headTexture, cellPos, 0, 4, WHITE);
-			}
-			else if (gameField[cellIndex] == 8) {
-				DrawTextureEx(headTexture, cellPos, 0, 4, WHITE);
-			}
-			else if (gameField[cellIndex] == 9) {
-				DrawCircleV(cellPos, 20, RED);
+				DrawTexturePro(appleTexture, cellRectangleSource, cellRectangleDest, origin, 0, WHITE);
 			}
 		}
 	}
@@ -86,7 +82,7 @@ void SnakeGame::reset() {
 	int headIndex = (fieldWidth / 2) + (fieldHeight * (fieldWidth / 2));
 	snakeArray = { headIndex, headIndex - 1, headIndex - 2 };
 	std::fill(gameField.begin(), gameField.end(), 0);
-	gameField[headIndex] = 2;
+	gameField[headIndex] = 5;
 	gameField[headIndex - 1] = 1;
 	gameField[headIndex - 2] = 1;
 	spawnApple();
@@ -128,7 +124,7 @@ void SnakeGame::updateSnake() {
 					}
 					if (!checkBodyHit(snakeArray[i] - fieldWidth)) {
 						snakeArray[i] = snakeArray[i] - fieldWidth;
-						gameField[snakeArray[i]] = 5;
+						gameField[snakeArray[i]] = 2;
 					}
 					break;
 				case Direction::DOWN:
@@ -138,7 +134,7 @@ void SnakeGame::updateSnake() {
 					}
 					if (!checkBodyHit(snakeArray[i] + fieldWidth)) {
 						snakeArray[i] = snakeArray[i] + fieldWidth;
-						gameField[snakeArray[i]] = 6;
+						gameField[snakeArray[i]] = 3;
 					}
 					break;
 				case Direction::LEFT:
@@ -148,7 +144,7 @@ void SnakeGame::updateSnake() {
 					}
 					if (!checkBodyHit(snakeArray[i] - 1)) {
 						snakeArray[i] = snakeArray[i] - 1;
-						gameField[snakeArray[i]] = 7;
+						gameField[snakeArray[i]] = 4;
 					}
 					break;
 				case Direction::RIGHT:
@@ -158,7 +154,7 @@ void SnakeGame::updateSnake() {
 					}
 					if (!checkBodyHit(snakeArray[i] + 1)) {
 						snakeArray[i] = snakeArray[i] + 1;
-						gameField[snakeArray[i]] = 8;
+						gameField[snakeArray[i]] = 5;
 					}
 					break;
 				}
@@ -169,25 +165,9 @@ void SnakeGame::updateSnake() {
 					// delete current body part
 					gameField[snakeArray[i]] = 0;
 				}
-
 				// get position of predecessor body part
 				snakeArray[i] = snakeArray[i - 1];
-
-				// set body part with specific direction
-				switch (currentDirection) {
-				case Direction::UP:
-					gameField[snakeArray[i]] = 1;
-					break;
-				case Direction::DOWN:
-					gameField[snakeArray[i]] = 2;
-					break;
-				case Direction::LEFT:
-					gameField[snakeArray[i]] = 3;
-					break;
-				case Direction::RIGHT:
-					gameField[snakeArray[i]] = 4;
-					break;
-				}
+				gameField[snakeArray[i]] = 1;
 			}
 		}
 	}
@@ -226,7 +206,7 @@ void SnakeGame::spawnApple() {
 		}
 	} while (inSnake);
 	
-	gameField[appleCellIndex] = 9;
+	gameField[appleCellIndex] = 6;
 }
 
 void SnakeGame::checkAppleHit(int pCellIndex) {

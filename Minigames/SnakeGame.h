@@ -13,13 +13,14 @@ private:
 	Texture2D cellTexture;
 	Texture2D headTexture;
 	Texture2D bodyTexture;
+	Texture2D appleTexture;
 
 	// Array: Every game field cell aligned in one array
 	int fieldWidth = 12;
 	int fieldHeight = 12;
 	int cellSize = 64;
-	/* If cell Index : 0 = nothing, 1 = body up, 2 = body down, 3 = body left, 4 = body right,
-	5 = head up, 6 = head down, 7 = head left, 8 = head right, 9 = apple */
+	/* If cell Index : 0 = nothing, 1 = body, 2 = head up, 3 = head down,
+	4 = head left, 5 = head right, 6 = apple */
 	std::vector<int> gameField;
 	// Array cell has cell index of body part position as value
 	std::vector<int> snakeArray;
@@ -32,7 +33,7 @@ private:
 	int appleCellIndex;
 	int score = 0;
 public:
-	SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture);
+	SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture, Texture2D pAppleTexture);
 	void update();
 	void draw();
 	void reset();

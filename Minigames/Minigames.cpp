@@ -17,10 +17,11 @@ int main() {
 	Texture2D cellTexture = LoadTexture("assets/images/Snake Cell Texture.png");
 	Texture2D headTexture = LoadTexture("assets/images/Snake Head Texture.png");
 	Texture2D bodyTexture = LoadTexture("assets/images/Snake Body Texture.png");
+	Texture2D appleTexture = LoadTexture("assets/images/Apple Texture.png");
 	
 	// Instance scene classes
 	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
-	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont, cellTexture, headTexture, bodyTexture);
+	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont, cellTexture, headTexture, bodyTexture, appleTexture);
 
 	while (!WindowShouldClose() && !close) {
 		BeginDrawing();
@@ -43,6 +44,7 @@ int main() {
 	UnloadTexture(cellTexture);
 	UnloadTexture(headTexture);
 	UnloadTexture(bodyTexture);
+	UnloadTexture(appleTexture);
 
 	CloseWindow();
 	return 0;
