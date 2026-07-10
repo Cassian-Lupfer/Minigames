@@ -12,10 +12,10 @@ private:
 	Font font;
 	bool& close;
 	const Color backgroundColor = GetColor(0x3003d9FF);
-	Button playButton;
-	Button exitButton;
-	Button backButton;
-	Button snakePlayButton;
+	Canolu::Button playButton;
+	Canolu::Button exitButton;
+	Canolu::Button backButton;
+	Canolu::Button snakePlayButton;
 	enum class Modes {TITLE, SELECTION};
 	Modes currentMode = Modes::TITLE;
 public:

@@ -1,26 +1,28 @@
 #include "Button.h"
 
-Button::Button(Vector2 pPosition, Vector2 pSize, Color pColor, const char* pName, Font pFont) {
-	position = pPosition;
-	size = pSize;
-	color = pColor;
-	name = pName;
-	font = pFont;
+namespace Canolu {
+	Button::Button(Vector2 pPosition, Vector2 pSize, Color pColor, const char* pName, Font pFont) {
+		position = pPosition;
+		size = pSize;
+		color = pColor;
+		name = pName;
+		font = pFont;
 
-	rec = Rectangle{position.x, position.y, size.x, size.y};
-}
-
-void Button::draw() {
-	DrawRectangle(position.x, position.y, size.x, size.y, color);
-	DrawTextEx(font, name, { position.x + 20, position.y + (size.y / 2) - 40}, 80, 0, BLACK);
-}
-
-bool Button::isPressed() {
-	Vector2 mousePosition = GetMousePosition();
-	if (CheckCollisionPointRec(mousePosition, rec) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-		return true;
+		rec = Rectangle{ position.x, position.y, size.x, size.y };
 	}
-	else {
-		return false;
+
+	void Button::draw() {
+		DrawRectangle(position.x, position.y, size.x, size.y, color);
+		DrawTextEx(font, name, { position.x + 20, position.y + (size.y / 2) - 40 }, 80, 0, BLACK);
+	}
+
+	bool Button::isPressed() {
+		Vector2 mousePosition = GetMousePosition();
+		if (CheckCollisionPointRec(mousePosition, rec) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

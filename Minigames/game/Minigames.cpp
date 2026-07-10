@@ -1,8 +1,10 @@
 #include <raylib.h>
+#include <ResourceManager.h>
 #include "EnumClasses.h"
 #include "TitleMenu.h"
 #include "SnakeGame.h"
 
+Canolu::ResourceManager resourceManager;
 constexpr float screenWidth = 1920;
 constexpr float screenHeight = 1080;
 bool close = false;
@@ -23,13 +25,14 @@ void updateSound(Sound& pSound, bool shouldPlay) {
 
 int main() {
 	InitWindow(screenWidth, screenHeight, "Minigames");
-	SetTargetFPS(60);
+	SetTargetFPS(120);
 	InitAudioDevice();
 
 	// Load assets
 	Sound titleMenuSoundtrack = LoadSoundFromWave(LoadWave("assets/sounds/Menu Soundtrack.wav"));
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
-	Texture2D cellTexture = LoadTexture("assets/images/Snake Cell Texture.png");
+	Texture2D cellTexture = resourceManager.loadTexture("assets/images/Snake Cell Texture.png");
+
 	Texture2D headTexture = LoadTexture("assets/images/Snake Head Texture.png");
 	Texture2D bodyTexture = LoadTexture("assets/images/Snake Body Texture.png");
 	Texture2D appleTexture = LoadTexture("assets/images/Apple Texture.png");
