@@ -145,16 +145,16 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Button.cpp" />
-    <ClCompile Include="Minigames.cpp" />
-    <ClCompile Include="SnakeGame.cpp" />
-    <ClCompile Include="TitleMenu.cpp" />
+    <ClCompile Include="game\Button.cpp" />
+    <ClCompile Include="game\Minigames.cpp" />
+    <ClCompile Include="game\SnakeGame.cpp" />
+    <ClCompile Include="game\TitleMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Button.h" />
-    <ClInclude Include="EnumClasses.h" />
-    <ClInclude Include="SnakeGame.h" />
-    <ClInclude Include="TitleMenu.h" />
+    <ClInclude Include="game\Button.h" />
+    <ClInclude Include="game\EnumClasses.h" />
+    <ClInclude Include="game\SnakeGame.h" />
+    <ClInclude Include="game\TitleMenu.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
