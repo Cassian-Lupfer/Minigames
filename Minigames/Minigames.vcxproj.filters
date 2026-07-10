@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="game\Button.cpp" />
     <ClCompile Include="game\Minigames.cpp" />
     <ClCompile Include="game\SnakeGame.cpp" />
     <ClCompile Include="game\TitleMenu.cpp" />
+    <ClCompile Include="CanoluEngine\Button.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\Button.h" />
     <ClInclude Include="game\EnumClasses.h" />
     <ClInclude Include="game\SnakeGame.h" />
     <ClInclude Include="game\TitleMenu.h" />
+    <ClInclude Include="CanoluEngine\Button.h" />
   </ItemGroup>
 </Project>

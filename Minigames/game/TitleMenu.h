@@ -2,8 +2,8 @@
 #define TITLEMENU_H_
 
 #include <raylib.h>
+#include <Button.h>
 #include "EnumClasses.h"
-#include "Button.h"
 
 class TitleMenu {
 private:

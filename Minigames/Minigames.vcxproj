@@ -111,7 +111,7 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\raylib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\raylib\include;C:\Users\Anwender\source\repos\Minigames\Minigames\CanoluEngine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,7 +132,7 @@
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>C:\raylib\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\raylib\include;C:\Users\Anwender\source\repos\Minigames\Minigames\CanoluEngine</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -145,13 +145,13 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="game\Button.cpp" />
+    <ClCompile Include="CanoluEngine\Button.cpp" />
     <ClCompile Include="game\Minigames.cpp" />
     <ClCompile Include="game\SnakeGame.cpp" />
     <ClCompile Include="game\TitleMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="game\Button.h" />
+    <ClInclude Include="CanoluEngine\Button.h" />
     <ClInclude Include="game\EnumClasses.h" />
     <ClInclude Include="game\SnakeGame.h" />
     <ClInclude Include="game\TitleMenu.h" />
