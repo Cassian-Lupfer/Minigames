@@ -10,15 +10,16 @@ constexpr float screenHeight = 1080;
 bool close = false;
 Scenes currentScene = Scenes::SNAKEGAME;
 
-void updateSound(Sound& pSound, bool shouldPlay) {
+void updateMusic(Music& pMusic, bool shouldPlay) {
 	if (shouldPlay) {
-		if (!IsSoundPlaying(pSound)) {
-			PlaySound(pSound);
+		if (!IsMusicStreamPlaying(pMusic)) {
+			PlayMusicStream(pMusic);
 		}
+		UpdateMusicStream(pMusic);
 	}
 	else {
-		if (IsSoundPlaying(pSound)) {
-			StopSound(pSound);
+		if (IsMusicStreamPlaying(pMusic)) {
+			StopMusicStream(pMusic);
 		}
 	}
 }
@@ -29,13 +30,12 @@ int main() {
 	InitAudioDevice();
 
 	// Load assets
-	Sound titleMenuSoundtrack = LoadSoundFromWave(LoadWave("assets/sounds/Menu Soundtrack.wav"));
+	Music titleMenuSoundtrack = resourceManager.loadMusic("assets/sounds/Menu Soundtrack.wav");
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
 	Texture2D cellTexture = resourceManager.loadTexture("assets/images/Snake Cell Texture.png");
-
-	Texture2D headTexture = LoadTexture("assets/images/Snake Head Texture.png");
-	Texture2D bodyTexture = LoadTexture("assets/images/Snake Body Texture.png");
-	Texture2D appleTexture = LoadTexture("assets/images/Apple Texture.png");
+	Texture2D headTexture = resourceManager.loadTexture("assets/images/Snake Head Texture.png");
+	Texture2D bodyTexture = resourceManager.loadTexture("assets/images/Snake Body Texture.png");
+	Texture2D appleTexture = resourceManager.loadTexture("assets/images/Apple Texture.png");
 	
 	// Instance scene classes
 	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
@@ -48,11 +48,11 @@ int main() {
 		switch (currentScene) {
 		case Scenes::TITLEMENU:
 			titleMenu.update();
-			updateSound(titleMenuSoundtrack, true);
+			updateMusic(titleMenuSoundtrack, true);
 			break;
 		case Scenes::SNAKEGAME:
 			snakeGame.update();
-			updateSound(titleMenuSoundtrack, false);
+			updateMusic(titleMenuSoundtrack, false);
 			break;
 		}
 		
@@ -61,11 +61,7 @@ int main() {
 
 	// Unload assets
 	UnloadFont(mainFont);
-	UnloadTexture(cellTexture);
-	UnloadTexture(headTexture);
-	UnloadTexture(bodyTexture);
-	UnloadTexture(appleTexture);
-	UnloadSound(titleMenuSoundtrack);
+	resourceManager.unloadAllAssets();
 
 	CloseAudioDevice();
 	CloseWindow();
