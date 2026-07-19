@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <raylib.h>
-#include "EnumClasses.h"
+#include "../EnumClasses.h"
 
 class SnakeGame {
 private:

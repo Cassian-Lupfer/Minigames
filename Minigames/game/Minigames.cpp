@@ -2,7 +2,7 @@
 #include <ResourceManager.h>
 #include "EnumClasses.h"
 #include "TitleMenu.h"
-#include "SnakeGame.h"
+#include "SnakeGame/SnakeGame.h"
 
 Canolu::ResourceManager resourceManager;
 constexpr float screenWidth = 1920;
