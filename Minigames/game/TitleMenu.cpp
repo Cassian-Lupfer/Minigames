@@ -6,7 +6,8 @@ TitleMenu::TitleMenu(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, boo
 	playButton({ 80, 500 }, { 200, 100 }, WHITE, "Play", pFont),
 	exitButton({ 80, 700 }, { 200, 100 }, WHITE, "Exit", pFont),
 	backButton({ pWindowSize.x - 280, 80 }, { 200, 100 }, WHITE, "Back", pFont),
-	snakePlayButton({ pWindowSize.x / 2 - 200, pWindowSize.y / 2 - 50 }, { 400, 100 }, WHITE, "Play Snakes", pFont)
+	snakePlayButton({ pWindowSize.x / 4 - 200, pWindowSize.y / 2 - 50 }, { 400, 100 }, WHITE, "Play Snakes", pFont),
+	asteroidsPlayButton({ (pWindowSize.x / 4) * 3 - 225, pWindowSize.y / 2 - 50 }, { 450, 100 }, WHITE, "Play Asteroids", pFont)
 {
 	windowSize = pWindowSize;
 	font = pFont;
@@ -28,6 +29,7 @@ void TitleMenu::draw() {
 	else if (currentMode == Modes::SELECTION) {
 		backButton.draw();
 		snakePlayButton.draw();
+		asteroidsPlayButton.draw();
 	}
 }
 
@@ -47,6 +49,9 @@ void TitleMenu::checkInteraction() {
 		}
 		if (snakePlayButton.isPressed()) {
 			currentScene = Scenes::SNAKEGAME;
+		}
+		if (asteroidsPlayButton.isPressed()) {
+			currentScene = Scenes::ASTEROIDSGAME;
 		}
 	}
 }

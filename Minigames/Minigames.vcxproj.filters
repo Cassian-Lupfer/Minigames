@@ -6,6 +6,7 @@
     <ClCompile Include="CanoluEngine\Button.cpp" />
     <ClCompile Include="CanoluEngine\ResourceManager.cpp" />
     <ClCompile Include="game\SnakeGame\SnakeGame.cpp" />
+    <ClCompile Include="game\AsteroidsGame\AsteroidsGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="game\EnumClasses.h" />
@@ -13,5 +14,6 @@
     <ClInclude Include="CanoluEngine\Button.h" />
     <ClInclude Include="CanoluEngine\ResourceManager.h" />
     <ClInclude Include="game\SnakeGame\SnakeGame.h" />
+    <ClInclude Include="game\AsteroidsGame\AsteroidsGame.h" />
   </ItemGroup>
 </Project>

@@ -3,12 +3,13 @@
 #include "EnumClasses.h"
 #include "TitleMenu.h"
 #include "SnakeGame/SnakeGame.h"
+#include "AsteroidsGame/AsteroidsGame.h"
 
 Canolu::ResourceManager resourceManager;
 constexpr float screenWidth = 1920;
 constexpr float screenHeight = 1080;
 bool close = false;
-Scenes currentScene = Scenes::SNAKEGAME;
+Scenes currentScene = Scenes::TITLEMENU;
 
 void updateMusic(Music& pMusic, bool shouldPlay) {
 	if (shouldPlay) {
@@ -40,6 +41,7 @@ int main() {
 	// Instance scene classes
 	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
 	SnakeGame snakeGame(currentScene, { screenWidth, screenHeight }, mainFont, cellTexture, headTexture, bodyTexture, appleTexture);
+	AsteroidsGame asteroidsGame(currentScene, { screenWidth, screenHeight }, mainFont);
 
 	while (!WindowShouldClose() && !close) {
 		BeginDrawing();
@@ -52,6 +54,10 @@ int main() {
 			break;
 		case Scenes::SNAKEGAME:
 			snakeGame.update();
+			updateMusic(titleMenuSoundtrack, false);
+			break;
+		case Scenes::ASTEROIDSGAME:
+			asteroidsGame.update();
 			updateMusic(titleMenuSoundtrack, false);
 			break;
 		}

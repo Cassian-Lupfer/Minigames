@@ -16,6 +16,7 @@ private:
 	Canolu::Button exitButton;
 	Canolu::Button backButton;
 	Canolu::Button snakePlayButton;
+	Canolu::Button asteroidsPlayButton;
 	enum class Modes {TITLE, SELECTION};
 	Modes currentMode = Modes::TITLE;
 public:
