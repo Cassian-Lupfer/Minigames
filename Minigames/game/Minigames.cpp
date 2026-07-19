@@ -30,12 +30,12 @@ int main() {
 	InitAudioDevice();
 
 	// Load assets
-	Music titleMenuSoundtrack = resourceManager.loadMusic("assets/sounds/Menu Soundtrack.wav");
 	Font mainFont = LoadFontEx("assets/fonts/CalSans-Regular.ttf", 128, NULL, 0);
 	Texture2D cellTexture = resourceManager.loadTexture("assets/images/Snake Cell Texture.png");
 	Texture2D headTexture = resourceManager.loadTexture("assets/images/Snake Head Texture.png");
 	Texture2D bodyTexture = resourceManager.loadTexture("assets/images/Snake Body Texture.png");
 	Texture2D appleTexture = resourceManager.loadTexture("assets/images/Apple Texture.png");
+	Music titleMenuSoundtrack = resourceManager.loadMusic("assets/sounds/Menu Soundtrack.wav");
 	
 	// Instance scene classes
 	TitleMenu titleMenu(currentScene, {screenWidth, screenHeight}, mainFont, close);
