@@ -1,5 +1,4 @@
 #include <iostream>
-#include <raylib.h>
 #include "ResourceManager.h"
 
 namespace Canolu {

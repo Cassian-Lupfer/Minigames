@@ -7,9 +7,12 @@
 
 class TitleMenu {
 private:
+	Canolu::ResourceManager resourceManager;
+
 	Scenes& currentScene;
 	Vector2 windowSize;
 	Font font;
+	Music titleMenuSoundtrack;
 	bool& close;
 	const Color backgroundColor = GetColor(0x3003d9FF);
 	Canolu::Button playButton;

@@ -2,6 +2,7 @@
 #define RESOURCEMANAGER_H_
 
 #include <vector>
+#include <raylib.h>
 
 namespace Canolu {
 	class ResourceManager {

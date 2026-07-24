@@ -7,6 +7,8 @@
 
 class SnakeGame {
 private:
+	Canolu::ResourceManager resourceManager;
+
 	Scenes& currentScene;
 	Vector2 windowSize;
 	Font font;
@@ -14,6 +16,8 @@ private:
 	Texture2D headTexture;
 	Texture2D bodyTexture;
 	Texture2D appleTexture;
+	Sound appleSound;
+	Sound snakeHitSound;
 
 	const Color backgroundColor = GetColor(0x3b1443FF);
 
@@ -35,7 +39,7 @@ private:
 	int appleCellIndex;
 	int score = 0;
 public:
-	SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture, Texture2D pAppleTexture);
+	SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont);
 	void update();
 	void draw();
 	void reset();

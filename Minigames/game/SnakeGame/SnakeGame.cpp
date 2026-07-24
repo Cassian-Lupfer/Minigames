@@ -1,16 +1,21 @@
 #include <algorithm>
+#include <ResourceManager.h>
 #include "SnakeGame.h"
 
-SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, Texture2D pCellTexture, Texture2D pHeadTexture, Texture2D pBodyTexture, Texture2D pAppleTexture)
+SnakeGame::SnakeGame(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont)
 	: currentScene(pCurrentScene),
 	gameField(fieldWidth * fieldHeight, 0)
 {
 	windowSize = pWindowSize;
 	font = pFont;
-	cellTexture = pCellTexture;
-	headTexture = pHeadTexture;
-	bodyTexture = pBodyTexture;
-	appleTexture = pAppleTexture;
+
+	// Load assets
+	cellTexture = resourceManager.loadTexture("assets/images/Snake Cell Texture.png");
+	headTexture = resourceManager.loadTexture("assets/images/Snake Head Texture.png");
+	bodyTexture = resourceManager.loadTexture("assets/images/Snake Body Texture.png");
+	appleTexture = resourceManager.loadTexture("assets/images/Apple Texture.png");
+	appleSound = resourceManager.loadSound("assets/sounds/Apple Sound.wav");
+	snakeHitSound = resourceManager.loadSound("assets/sounds/Snake Hit Sound.wav");
 
 	reset();
 }
@@ -177,7 +182,7 @@ void SnakeGame::updateSnake() {
 bool SnakeGame::checkBodyHit(int pCellIndex) {
 	for (int i = 0; i < snakeArray.size(); i++) {
 		if (snakeArray[i] == pCellIndex) {
-			gameOver = true;
+			setGameOver();
 			return true;
 		}
 	}
@@ -190,6 +195,7 @@ void SnakeGame::extendSnake() {
 
 void SnakeGame::setGameOver() {
 	gameOver = true;
+	PlaySound(snakeHitSound);
 }
 
 void SnakeGame::spawnApple() {
@@ -215,5 +221,6 @@ void SnakeGame::checkAppleHit(int pCellIndex) {
 		score += 1;
 		extendSnake();
 		spawnApple();
+		PlaySound(appleSound);
 	}
 }

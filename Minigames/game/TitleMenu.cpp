@@ -1,3 +1,4 @@
+#include <ResourceManager.h>
 #include "TitleMenu.h"
 
 TitleMenu::TitleMenu(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, bool& pClose)
@@ -11,11 +12,14 @@ TitleMenu::TitleMenu(Scenes& pCurrentScene, Vector2 pWindowSize, Font pFont, boo
 {
 	windowSize = pWindowSize;
 	font = pFont;
+	titleMenuSoundtrack = resourceManager.loadMusic("assets/sounds/Menu Soundtrack.wav");
+	PlayMusicStream(titleMenuSoundtrack);
 }
 
 void TitleMenu::update() {
 	draw();
 	checkInteraction();
+	UpdateMusicStream(titleMenuSoundtrack);
 }
 
 void TitleMenu::draw() {
