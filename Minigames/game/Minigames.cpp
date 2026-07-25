@@ -9,7 +9,7 @@ Canolu::ResourceManager resourceManager;
 constexpr float screenWidth = 1920;
 constexpr float screenHeight = 1080;
 bool close = false;
-Scenes currentScene = Scenes::TITLEMENU;
+Scenes currentScene = Scenes::ASTEROIDSGAME;
 
 int main() {
 	InitWindow(screenWidth, screenHeight, "Minigames");
